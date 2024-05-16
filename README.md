@@ -21,14 +21,14 @@ As you can track how far this project goes, here is my to-do-list according to t
 - [ ]  CI/CD
 - [ ]  Logging
 - Service
-- [ ]  Users
-- [ ]  Testimonials
-- [ ]  Authentications
-- [ ]  Places
-- [ ]  Activities
-- [ ]  Features
-- [ ]  Categories
-- [ ]  Category_items
+    - [ ]  Users
+    - [ ]  Testimonials
+    - [ ]  Authentications
+    - [ ]  Places
+    - [ ]  Activities
+    - [ ]  Features
+    - [ ]  Categories
+    - [ ]  Category_items
 - Test
     - Integration Test
         - [ ]  Users
