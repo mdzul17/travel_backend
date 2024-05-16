@@ -20,19 +20,16 @@ exports.up = (pgm) => {
         },
         birth_date: {
             type: "DATE",
-            notNull: false,
         },
         fullname: {
-            type: "INTEGER",
+            type: "VARCHAR(50)",
             notNull: true,
         },
         phone_number: {
-            type: "INTEGER",
-            notNull: true
+            type: "VARCHAR(50)"
         },
         address: {
-            type: "TEXT",
-            notNull: true
+            type: "TEXT"
         },
         is_verified: {
             type: "bool",

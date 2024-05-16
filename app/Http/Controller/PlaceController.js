@@ -1,21 +1,21 @@
-const UsersService = require("../Service/UsersService")
+const PlacesService = require("../Service/PlacesService")
 const Response = require("../Utils/HttpResponse")
 
-const UserController = {
-    getUsers: async(req, res) => {
+const PlaceController = {
+    getPlaces: async(req, res) => {
         try {
-            const users = await UsersService.getUsers();
-            return Response.success(res, users.rows)
+            const places = await PlacesService.getPlaces();
+            return Response.success(res, places.rows)
         } catch (error) {
             console.error(error)
             return Response.error(res, "Something went wrong")
         }
     },
 
-    getUserById: async(req,res) => {
+    getPlaceById: async(req,res) => {
         try {
             const { id } = req.params
-            const user = await UsersService.getUserById(id);
+            const user = await PlacesService.getPlaceById(id);
 
             if(!user.rows.length){
                 return Response.notFound(res, "No user found")
@@ -28,26 +28,26 @@ const UserController = {
         }
     },
 
-    addUser: async(req,res) => {
+    addPlace: async(req,res) => {
         try {
-            const response = await UsersService.addUser(req.body)
+            const response = await PlacesService.addPlace(req.body)
 
             return Response.success(
                 res,
-                `User ID ${response.rows[0].id} successfully added`
+                `Place ID ${response.rows[0].id} successfully added`
             )
         } catch (error) {
             console.error(error)
-            if(error.constraint == "users_username_key") {
-                return Response.error(res, `Username already exists!`)
+            if(error.constraint == "places_username_key") {
+                return Response.error(res, `Placename already exists!`)
             }
             return Response.error(res, `Something went wrong`)
         }
     },
 
-    editUser: async(req, res) => {
+    editPlace: async(req, res) => {
         try {
-            const response = await UsersService.editUser({...req.params, ...req.body})
+            const response = await PlacesService.editPlace({...req.params, ...req.body})
 
             if(!response.rows.length) {
                 return Response.notFound(res, "No user found");
@@ -55,7 +55,7 @@ const UserController = {
 
             return Response.success(
                 res,
-                `User ID ${response.rows[0].id} successfully updated`
+                `Place ID ${response.rows[0].id} successfully updated`
             )
         } catch (error) {
             console.error(error);
@@ -63,17 +63,17 @@ const UserController = {
         }
     },
 
-    deleteUser: async(req, res) =>{
+    deletePlace: async(req, res) =>{
         try {
-            const user = await UsersService.deleteUser(req.params.id)
+            const user = await PlacesService.deletePlace(req.params.id)
 
             if(!user.rows.length){
                 return Response.notFound(res,
-                    `User failed to be deleted, ${req.params.id} is not found`
+                    `Place failed to be deleted, ${req.params.id} is not found`
                 )
             }
 
-            return Response.success(res, `User successfully deleted`)
+            return Response.success(res, `Place successfully deleted`)
         } catch (error) {
             console.error(error)
             return Response.error(res, `Something went wrong`)
@@ -81,4 +81,4 @@ const UserController = {
     }
 }
 
-module.exports = UserController
+module.exports = PlaceController
