@@ -1,8 +1,9 @@
-const PlacesService = require("../Service/PlacesService")
-const Response = require("../Utils/HttpResponse")
+import { PlacesService } from "../Service/PlacesService.js";
+import { HttpResponse as Response } from "../Utils/HttpResponse.js";
+import express from 'express'
 
-const PlaceController = {
-    getPlaces: async(req, res) => {
+export const PlaceController = {
+    getPlaces: async(req: express.Request, res: express.Response) => {
         try {
             const places = await PlacesService.getPlaces();
             return Response.success(res, places.rows)
@@ -12,7 +13,7 @@ const PlaceController = {
         }
     },
 
-    getPlaceById: async(req,res) => {
+    getPlaceById: async(req: express.Request, res: express.Response) => {
         try {
             const { id } = req.params
             const user = await PlacesService.getPlaceById(id);
@@ -28,7 +29,7 @@ const PlaceController = {
         }
     },
 
-    addPlace: async(req,res) => {
+    addPlace: async(req: express.Request, res: express.Response) => {
         try {
             const response = await PlacesService.addPlace(req.body)
 
@@ -45,7 +46,7 @@ const PlaceController = {
         }
     },
 
-    editPlace: async(req, res) => {
+    editPlace: async(req: express.Request, res: express.Response) => {
         try {
             const response = await PlacesService.editPlace({...req.params, ...req.body})
 
@@ -63,7 +64,7 @@ const PlaceController = {
         }
     },
 
-    deletePlace: async(req, res) =>{
+    deletePlace: async(req: express.Request, res: express.Response) =>{
         try {
             const user = await PlacesService.deletePlace(req.params.id)
 
@@ -80,5 +81,3 @@ const PlaceController = {
         }
     }
 }
-
-module.exports = PlaceController

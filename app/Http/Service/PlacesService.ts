@@ -1,8 +1,9 @@
-const { nanoid } = require('nanoid')
-const { Pool } = require('pg')
+import { nanoid } from 'nanoid';
+import {Pool} from 'pg'
+
 const pool = new Pool();
 
-module.exports = {
+export const PlacesService = {
     getPlaces: async() => {
         const query = {
             text: 'SELECT * FROM places'
@@ -10,7 +11,7 @@ module.exports = {
 
         return await pool.query(query)
     },
-    getPlaceById: async (id) => {
+    getPlaceById: async (id: string) => {
         const query = {
           text: "SELECT * FROM places whereid = $1",
           values: [id],
@@ -18,7 +19,7 @@ module.exports = {
     
         return await pool.query(query);
       },
-      addPlace: async (payload) => {
+      addPlace: async (payload: Record<string, any>) => {
         const { name, country, city, price, unit, isPopular, hasBackyard, description, imageUrl } = payload;
         const id = `place-${nanoid(16)}`;
         const query = {
@@ -28,7 +29,7 @@ module.exports = {
     
         return await pool.query(query);
       },
-      editPlace: async (payload) => {
+      editPlace: async (payload: Record<string, any>) => {
         const { id, name, country, city, price, unit, isPopular, hasBackyard, description, imageUrl } = payload;
     
         const query = {
@@ -38,7 +39,7 @@ module.exports = {
     
         return await pool.query(query);
       },
-      deletePlace: async (id) => {
+      deletePlace: async (id: string) => {
         const query = {
           text: "DELETE FROM places WHERE id = $1 RETURNING id",
           values: [id],
