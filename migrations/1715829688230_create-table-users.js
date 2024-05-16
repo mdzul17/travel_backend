@@ -41,6 +41,10 @@ exports.up = (pgm) => {
         password: {
             type: "VARCHAR(100)",
             notNull: true
+        },
+        email: {
+            type: "VARCHAR(50)",
+            notNull: true
         }
     })
 };
