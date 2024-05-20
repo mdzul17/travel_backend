@@ -1,8 +1,9 @@
-const UsersService = require("../Service/UsersService")
-const Response = require("../Utils/HttpResponse")
+import { UsersService } from "../Service/UsersService.js";
+import { HttpResponse as Response } from "../Utils/HttpResponse.js";
+import express from 'express'
 
-const UserController = {
-    getUsers: async(req, res) => {
+export const UserController = {
+    getUsers: async(req: express.Request, res: express.Response) => {
         try {
             const users = await UsersService.getUsers();
             return Response.success(res, users.rows)
@@ -12,7 +13,7 @@ const UserController = {
         }
     },
 
-    getUserById: async(req,res) => {
+    getUserById: async(req: express.Request, res: express.Response) => {
         try {
             const { id } = req.params
             const user = await UsersService.getUserById(id);
@@ -28,7 +29,7 @@ const UserController = {
         }
     },
 
-    addUser: async(req,res) => {
+    addUser: async(req: express.Request, res: express.Response) => {
         try {
             const response = await UsersService.addUser(req.body)
 
@@ -45,7 +46,7 @@ const UserController = {
         }
     },
 
-    editUser: async(req, res) => {
+    editUser: async(req: express.Request, res: express.Response) => {
         try {
             const response = await UsersService.editUser({...req.params, ...req.body})
 
@@ -63,7 +64,7 @@ const UserController = {
         }
     },
 
-    deleteUser: async(req, res) =>{
+    deleteUser: async(req: express.Request, res: express.Response) =>{
         try {
             const user = await UsersService.deleteUser(req.params.id)
 
@@ -80,5 +81,3 @@ const UserController = {
         }
     }
 }
-
-module.exports = UserController

@@ -1,9 +1,10 @@
-const { nanoid } = require("nanoid")
-const { Pool } = require("pg")
-const bcrypt = require("bcrypt")
+import { nanoid } from 'nanoid';
+import {Pool} from 'pg'
+import bcrypt from 'bcrypt'
+
 const pool = new Pool();
 
-module.exports = {
+export const UsersService = {
     getUsers: async() => {
         const query = {
             text: "SELECT * FROM users",
@@ -12,7 +13,7 @@ module.exports = {
         return await pool.query(query)
     },
 
-    getUserById: async(id) => {
+    getUserById: async(id: string) => {
         const query = {
             text: "SELECT * FROM users WHERE id = $1",
             values: [id]
@@ -21,7 +22,7 @@ module.exports = {
         return await pool.query(query)
     },
 
-    addUser: async(payload) => {
+    addUser: async(payload: Record<string, any>) => {
         const { username, fullname, password, email, birthdate, phone_number, address, is_verified} = payload
         const id = `user-${nanoid(8)}`
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -33,7 +34,7 @@ module.exports = {
         return await pool.query(query)
     },
 
-    editUser: async(payload) => {
+    editUser: async(payload: Record<string, any>) => {
         const { username, fullname, password, email, birthdate, phone_number, address } = payload
 
         const hashedPassword = await bcrypt.hash(password, 10)
@@ -45,10 +46,10 @@ module.exports = {
         return await pool.query(query)
     },
 
-    deleteUser: async(id) => {
+    deleteUser: async(id: string) => {
         const query = {
             text: "DELETE FROM users WHERE id = $1 RETURNING id",
-            values: id
+            values: [id]
         }
 
         return await pool.query(query)
