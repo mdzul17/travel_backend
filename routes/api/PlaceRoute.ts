@@ -1,14 +1,18 @@
 import express from "express";
 
 const Router = express.Router();
-import { PlaceController } from "app/Http/Controller/PlaceController.js";
+import PlaceController from "app/Http/Controller/PlaceController.js";
+import PlacesService from "app/Http/Service/PlacesService.js";
 
-Router.get("/", PlaceController.getPlaces);
-Router.get("/:id", PlaceController.getPlaceById)
-Router.post("/", PlaceController.addPlace)
-Router.put("/:id", PlaceController.editPlace)
-Router.delete("/:id", PlaceController.deletePlace)
+const placesService = new PlacesService()
+const placeController = new PlaceController(placesService)
 
 export default (): express.Router => {
+    Router.get("/", placeController.getPlaces);
+    Router.get("/:id", placeController.getPlaceById)
+    Router.post("/", placeController.addPlace)
+    Router.put("/:id", placeController.editPlace)
+    Router.delete("/:id", placeController.deletePlace)
+
     return Router
 }

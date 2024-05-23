@@ -1,25 +1,27 @@
 import { nanoid } from 'nanoid';
 import {Pool} from 'pg'
 
-const pool = new Pool();
 
-export const PlacesService = {
-    getPlaces: async() => {
+export default class PlacesService {
+  private pool = new Pool();
+    async getPlaces(){
         const query = {
             text: 'SELECT * FROM places'
         }
 
-        return await pool.query(query)
-    },
-    getPlaceById: async (id: string) => {
+        return await this.pool.query(query)
+    }
+
+    async getPlaceById(id: string) {
         const query = {
           text: "SELECT * FROM places whereid = $1",
           values: [id],
         };
     
-        return await pool.query(query);
-      },
-      addPlace: async (payload: Record<string, any>) => {
+        return await this.pool.query(query);
+      }
+
+      async addPlace(payload: Record<string, any>) {
         const { name, country, city, price, unit, isPopular, hasBackyard, description, imageUrl } = payload;
         const id = `place-${nanoid(16)}`;
         const query = {
@@ -27,9 +29,9 @@ export const PlacesService = {
           values: [id, name, country, city, price, unit, isPopular, hasBackyard, description, imageUrl],
         };
     
-        return await pool.query(query);
-      },
-      editPlace: async (payload: Record<string, any>) => {
+        return await this.pool.query(query);
+      }
+      async editPlace(payload: Record<string, any>) {
         const { id, name, country, city, price, unit, isPopular, hasBackyard, description, imageUrl } = payload;
     
         const query = {
@@ -37,14 +39,14 @@ export const PlacesService = {
           values: [name, country, city, price, unit, isPopular, hasBackyard, description, imageUrl, id],
         };
     
-        return await pool.query(query);
-      },
-      deletePlace: async (id: string) => {
+        return await this.pool.query(query);
+      }
+      async deletePlace(id: string) {
         const query = {
           text: "DELETE FROM places WHERE id = $1 RETURNING id",
           values: [id],
         };
     
-        return await pool.query(query);
-      },
+        return await this.pool.query(query);
+      }
 }

@@ -1,27 +1,28 @@
-const { nanoid } = require("nanoid")
-const { Pool } = require("pg")
-const bcrypt = require("bcrypt")
-const pool = new Pool();
+import { nanoid } from 'nanoid';
+import {Pool} from 'pg'
+import bcrypt from 'bcrypt'
 
-module.exports = {
-    getUsers: async() => {
+class UsersService {
+    private pool = new Pool();
+
+    async getUsers() {
         const query = {
             text: "SELECT * FROM users",
         }
 
-        return await pool.query(query)
-    },
+        return await this.pool.query(query)
+    }
 
-    getUserById: async(id) => {
+    async getUserById(id: string) {
         const query = {
             text: "SELECT * FROM users WHERE id = $1",
             values: [id]
         }
 
-        return await pool.query(query)
-    },
+        return await this.pool.query(query)
+    }
 
-    addUser: async(payload) => {
+    async addUser(payload: Record<string, any>) {
         const { username, fullname, password, email, birthdate, phone_number, address, is_verified} = payload
         const id = `user-${nanoid(8)}`
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -30,10 +31,10 @@ module.exports = {
             values: [id, username, birthdate, fullname, phone_number, address, is_verified, hashedPassword, email]
         }
 
-        return await pool.query(query)
-    },
+        return await this.pool.query(query)
+    }
 
-    editUser: async(payload) => {
+    async editUser(payload: Record<string, any>) {
         const { username, fullname, password, email, birthdate, phone_number, address } = payload
 
         const hashedPassword = await bcrypt.hash(password, 10)
@@ -42,15 +43,17 @@ module.exports = {
             values: [username, fullname, hashedPassword, email, birthdate, phone_number, address]
         }
 
-        return await pool.query(query)
-    },
+        return await this.pool.query(query)
+    }
 
-    deleteUser: async(id) => {
+    async deleteUser(id: string){
         const query = {
             text: "DELETE FROM users WHERE id = $1 RETURNING id",
-            values: id
+            values: [id]
         }
 
-        return await pool.query(query)
+        return await this.pool.query(query)
     }
 }
+
+export default UsersService
