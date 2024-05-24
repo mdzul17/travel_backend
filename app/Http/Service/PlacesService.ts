@@ -14,7 +14,7 @@ export default class PlacesService {
 
     async getPlaceById(id: string) {
         const query = {
-          text: "SELECT * FROM places whereid = $1",
+          text: "SELECT * FROM places where id = $1",
           values: [id],
         };
     
