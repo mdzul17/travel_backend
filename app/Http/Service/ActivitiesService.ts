@@ -1,6 +1,5 @@
 import { nanoid } from 'nanoid';
 import {Pool} from 'pg'
-import bcrypt from 'bcrypt'
 
 class ActivitiesService {
     private pool = new Pool();
@@ -13,10 +12,10 @@ class ActivitiesService {
         return await this.pool.query(query)
     }
 
-    async getActivityById(id: string) {
+    async getActivityById(activity_id: string) {
         const query = {
-            text: "SELECT * FROM activities WHERE id = $1",
-            values: [id]
+            text: "SELECT * FROM activities WHERE activity_id = $1",
+            values: [activity_id]
         }
 
         return await this.pool.query(query)
@@ -24,30 +23,30 @@ class ActivitiesService {
 
     async addActivity(payload: Record<string, any>) {
         const { name, type, imageUrl } = payload
-        const id = `activity-${nanoid(8)}`
+        const activity_id = `activity-${nanoid(8)}`
         const query = {
-            text: "INSERT INTO activities VALUES ($1, $2, $3, $4) RETURNING id",
-            values: [id, name, type, imageUrl]
+            text: "INSERT INTO activities VALUES ($1, $2, $3, $4) RETURNING activity_id",
+            values: [activity_id, name, type, imageUrl]
         }
 
         return await this.pool.query(query)
     }
 
     async editActivity(payload: Record<string, any>) {
-        const { name, type, imageUrl, id } = payload
+        const { name, type, imageUrl, activity_id } = payload
 
         const query = {
-            text: "UPDATE activities SET name = $1, type = $2, imageUrl = $3 WHERE id = $4 RETURNING id",
-            values: [name, type, imageUrl, id]
+            text: "UPDATE activities SET name = $1, type = $2, imageUrl = $3 WHERE id = $4 RETURNING activity_id",
+            values: [name, type, imageUrl, activity_id]
         }
 
         return await this.pool.query(query)
     }
 
-    async deleteActivity(id: string){
+    async deleteActivity(activity_id: string){
         const query = {
-            text: "DELETE FROM activities WHERE id = $1 RETURNING id",
-            values: [id]
+            text: "DELETE FROM activities WHERE activity_id = $1 RETURNING activity_id",
+            values: [activity_id]
         }
 
         return await this.pool.query(query)

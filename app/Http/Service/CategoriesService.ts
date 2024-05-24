@@ -13,10 +13,10 @@ class CategoriesService {
         return await this.pool.query(query)
     }
 
-    async getCategoryById(id: string) {
+    async getCategoryById(category_id: string) {
         const query = {
-            text: "SELECT * FROM categories WHERE id = $1",
-            values: [id]
+            text: "SELECT * FROM categories WHERE category_id = $1",
+            values: [category_id]
         }
 
         return await this.pool.query(query)
@@ -24,30 +24,30 @@ class CategoriesService {
 
     async addCategory(payload: Record<string, any>) {
         const { name } = payload
-        const id = `categorie-${nanoid(8)}`
+        const category_id = `categorie-${nanoid(8)}`
         const query = {
-            text: "INSERT INTO categories VALUES ($1, $2) RETURNING id",
-            values: [id, name]
+            text: "INSERT INTO categories VALUES ($1, $2) RETURNING category_id",
+            values: [category_id, name]
         }
 
         return await this.pool.query(query)
     }
 
     async editCategory(payload: Record<string, any>) {
-        const { name, id } = payload
+        const { name, category_id } = payload
 
         const query = {
-            text: "UPDATE categories SET name = $1 WHERE id = $2 RETURNING id",
-            values: [name, id]
+            text: "UPDATE categories SET name = $1 WHERE category_id = $2 RETURNING category_id",
+            values: [name, category_id]
         }
 
         return await this.pool.query(query)
     }
 
-    async deleteCategory(id: string){
+    async deleteCategory(category_id: string){
         const query = {
-            text: "DELETE FROM categories WHERE id = $1 RETURNING id",
-            values: [id]
+            text: "DELETE FROM categories WHERE category_id = $1 RETURNING category_id",
+            values: [category_id]
         }
 
         return await this.pool.query(query)
