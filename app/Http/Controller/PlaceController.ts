@@ -23,13 +23,13 @@ class PlaceController {
     async getPlaceById(req: express.Request, res: express.Response){
         try {
             const { id } = req.params
-            const user = await this._placesService.getPlaceById(id);
+            const place = await this._placesService.getPlaceById(id);
 
-            if(!user.rows.length){
-                return this.response.notFound(res, "No user found")
+            if(!place.rows.length){
+                return this.response.notFound(res, "No place found")
             }
 
-            return this.response.success(res, user.rows)
+            return this.response.success(res, place.rows)
         } catch (error) {
             console.error(error.message)
             return this.response.error(res, "Something went wrong")
@@ -46,9 +46,6 @@ class PlaceController {
             )
         } catch (error) {
             console.error(error)
-            if(error.constraint == "places_username_key") {
-                return this.response.error(res, `Placename already exists!`)
-            }
             return this.response.error(res, `Something went wrong`)
         }
     }
@@ -58,7 +55,7 @@ class PlaceController {
             const response = await this._placesService.editPlace({...req.params, ...req.body})
 
             if(!response.rows.length) {
-                return this.response.notFound(res, "No user found");
+                return this.response.notFound(res, "No place found");
             }
 
             return this.response.success(
@@ -73,9 +70,9 @@ class PlaceController {
 
     async deletePlace(req: express.Request, res: express.Response){
         try {
-            const user = await this._placesService.deletePlace(req.params.id)
+            const place = await this._placesService.deletePlace(req.params.id)
 
-            if(!user.rows.length){
+            if(!place.rows.length){
                 return this.response.notFound(res,
                     `Place failed to be deleted, ${req.params.id} is not found`
                 )
