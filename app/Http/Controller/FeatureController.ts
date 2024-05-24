@@ -23,13 +23,13 @@ class FeatureController {
     async getFeatureById(req: express.Request, res: express.Response){
         try {
             const { id } = req.params
-            const user = await this._featuresService.getFeatureById(id);
+            const feature = await this._featuresService.getFeatureById(id);
 
-            if(!user.rows.length){
-                return this.response.notFound(res, "No user found")
+            if(!feature.rows.length){
+                return this.response.notFound(res, "No feature found")
             }
 
-            return this.response.success(res, user.rows)
+            return this.response.success(res, feature.rows)
         } catch (error) {
             console.error(error.message)
             return this.response.error(res, "Something went wrong")
@@ -55,7 +55,7 @@ class FeatureController {
             const response = await this._featuresService.editFeature({...req.params, ...req.body})
 
             if(!response.rows.length) {
-                return this.response.notFound(res, "No user found");
+                return this.response.notFound(res, "No feature found");
             }
 
             return this.response.success(
@@ -70,9 +70,9 @@ class FeatureController {
 
     async deleteFeature(req: express.Request, res: express.Response){
         try {
-            const user = await this._featuresService.deleteFeature(req.params.id)
+            const feature = await this._featuresService.deleteFeature(req.params.id)
 
-            if(!user.rows.length){
+            if(!feature.rows.length){
                 return this.response.notFound(res,
                     `Feature failed to be deleted, ${req.params.id} is not found`
                 )

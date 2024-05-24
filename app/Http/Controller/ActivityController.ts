@@ -23,13 +23,13 @@ class ActivityController {
     async getActivityById(req: express.Request, res: express.Response){
         try {
             const { id } = req.params
-            const user = await this._placesService.getActivityById(id);
+            const activity = await this._placesService.getActivityById(id);
 
-            if(!user.rows.length){
-                return this.response.notFound(res, "No user found")
+            if(!activity.rows.length){
+                return this.response.notFound(res, "No activity found")
             }
 
-            return this.response.success(res, user.rows)
+            return this.response.success(res, activity.rows)
         } catch (error) {
             console.error(error.message)
             return this.response.error(res, "Something went wrong")
@@ -55,7 +55,7 @@ class ActivityController {
             const response = await this._placesService.editActivity({...req.params, ...req.body})
 
             if(!response.rows.length) {
-                return this.response.notFound(res, "No user found");
+                return this.response.notFound(res, "No activity found");
             }
 
             return this.response.success(
@@ -70,9 +70,9 @@ class ActivityController {
 
     async deleteActivity(req: express.Request, res: express.Response){
         try {
-            const user = await this._placesService.deleteActivity(req.params.id)
+            const activity = await this._placesService.deleteActivity(req.params.id)
 
-            if(!user.rows.length){
+            if(!activity.rows.length){
                 return this.response.notFound(res,
                     `Activity failed to be deleted, ${req.params.id} is not found`
                 )
