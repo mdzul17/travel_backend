@@ -24,7 +24,7 @@ class FeaturesService {
 
     async addFeature(payload: Record<string, any>) {
         const { username, fullname, password, email, birthdate, phone_number, address, is_verified} = payload
-        const id = `user-${nanoid(8)}`
+        const id = `feature-${nanoid(8)}`
         const hashedPassword = await bcrypt.hash(password, 10);
         const query = {
             text: "INSERT INTO features VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id",

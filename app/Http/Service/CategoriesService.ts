@@ -23,24 +23,22 @@ class CategoriesService {
     }
 
     async addCategory(payload: Record<string, any>) {
-        const { username, fullname, password, email, birthdate, phone_number, address, is_verified} = payload
-        const id = `user-${nanoid(8)}`
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const { name } = payload
+        const id = `categorie-${nanoid(8)}`
         const query = {
-            text: "INSERT INTO categories VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id",
-            values: [id, username, birthdate, fullname, phone_number, address, is_verified, hashedPassword, email]
+            text: "INSERT INTO categories VALUES ($1, $2) RETURNING id",
+            values: [id, name]
         }
 
         return await this.pool.query(query)
     }
 
     async editCategory(payload: Record<string, any>) {
-        const { username, fullname, password, email, birthdate, phone_number, address } = payload
+        const { name, id } = payload
 
-        const hashedPassword = await bcrypt.hash(password, 10)
         const query = {
-            text: "UPDATE categories SET username = $1, fullname = $2, password = $3, email = $4, birthdate = $5, phone_number = $6, address = $7 RETURNING id",
-            values: [username, fullname, hashedPassword, email, birthdate, phone_number, address]
+            text: "UPDATE categories SET name = $1 WHERE id = $2 RETURNING id",
+            values: [name, id]
         }
 
         return await this.pool.query(query)
