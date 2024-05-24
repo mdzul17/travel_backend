@@ -21,33 +21,16 @@ As you can track how far this project goes, here is my to-do-list according to t
 - [ ]  CI/CD
 - [ ]  Logging
 - Service
-    - [ ]  Users
-    - [ ]  Testimonials
-    - [ ]  Authentications
-    - [ ]  Places
-    - [ ]  Activities
-    - [ ]  Features
-    - [ ]  Categories
-    - [ ]  Category_items
-- Test
-    - Integration Test
-        - [ ]  Users
-        - [ ]  Testimonials
-        - [ ]  Authentications
-        - [ ]  Places
-        - [ ]  Activities
-        - [ ]  Features
-        - [ ]  Categories
-        - [ ]  Category_items
-    - Unit
-        - [ ]  Users
-        - [ ]  Testimonials
-        - [ ]  Authentications
-        - [ ]  Places
-        - [ ]  Activities
-        - [ ]  Features
-        - [ ]  Categories
-        - [ ]  Category_items
+    - [x]  Users
+    - [x]  Testimonials
+    - []  Authentications
+    - [x]  Places
+    - [x]  Activities
+    - [x]  Features
+    - [x]  Categories
+    - [x]  Category items
+    - [x]  Unit types
+    - [x]  Place types
 
 ## Later on
 

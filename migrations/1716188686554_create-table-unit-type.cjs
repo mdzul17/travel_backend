@@ -10,7 +10,7 @@ exports.shorthands = undefined;
  */
 exports.up = (pgm) => {
     pgm.createTable('unit_types', {
-        ptype_id: {
+        utype_id: {
             primaryKey: true,
             type: 'VARCHAR(50)'
         },
