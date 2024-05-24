@@ -6,11 +6,13 @@ import PlaceRoute from "./api/PlaceRoute.js"
 import ActivityRoute from "./api/ActivityRoute.js"
 import FeatureRoute from "./api/FeatureRoute.js"
 import TestimonialRoute from "./api/TestimonialRoute.js"
+import CategoryRoute from "./api/CategoryRoute.js"
 
 app.use('/users', UserRoute)
 app.use('/places', PlaceRoute)
 app.use('/activities', ActivityRoute)
 app.use('/features', FeatureRoute)
 app.use('/testimonial', TestimonialRoute)
+app.use('/category', CategoryRoute)
 
 module.exports = app
