@@ -9,6 +9,7 @@ import TestimonialRoute from "./api/TestimonialRoute.js"
 import CategoryRoute from "./api/CategoryRoute.js"
 import CategoryItemRoute from "./api/CategoryItemRoute.js"
 import PlaceTypeRoute from "./api/PlaceTypeRoute.js"
+import UnitTypeRoute from "./api/UnitTypeRoute.js"
 
 app.use('/users', UserRoute)
 app.use('/places', PlaceRoute)
@@ -18,5 +19,6 @@ app.use('/testimonial', TestimonialRoute)
 app.use('/category', CategoryRoute)
 app.use('/category-item', CategoryItemRoute)
 app.use('/place-type', PlaceTypeRoute)
+app.use('/unit-type', UnitTypeRoute)
 
 module.exports = app
