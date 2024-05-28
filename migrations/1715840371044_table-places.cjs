@@ -12,11 +12,12 @@ exports.up = (pgm) => {
     pgm.createTable('places', {
         place_id: {
             type: 'VARCHAR(50)',
-            notNull: true
+            notNull: true,
+            primaryKey: true
         },
         name: {
             type: 'VARCHAR(200)',
-            notNull: true
+            notNull: true,
         },
         country: {
             type: 'VARCHAR(50)',

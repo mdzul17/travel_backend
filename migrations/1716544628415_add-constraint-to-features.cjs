@@ -9,21 +9,17 @@ exports.shorthands = undefined;
  * @returns {Promise<void> | void}
  */
 exports.up = (pgm) => {
-    pgm.createTable('features', {
-        feature_id: {
+    pgm.addColumn('features', {
+        place_id: {
             type: 'VARCHAR(50)',
-            primaryKey: true
-        },
-        qty: {
-            type: 'INTEGER'
-        },
-        name: {
-            type: 'VARCHAR(50)',
-        },
-        imageUrl: {
-            type: 'JSON'
+            notNull: true
         }
     })
+
+    pgm.addConstraint('features',
+        'features.place_id_places.place_id',
+        'FOREIGN KEY(place_id) REFERENCES places(place_id) ON DELETE CASCADE'
+    )
 };
 
 /**
@@ -32,5 +28,5 @@ exports.up = (pgm) => {
  * @returns {Promise<void> | void}
  */
 exports.down = (pgm) => {
-    pgm.dropTable('features')
+    pgm.dropConstraint('features','features.place_id_places.place_id')
 };
