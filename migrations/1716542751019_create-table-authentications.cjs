@@ -9,19 +9,10 @@ exports.shorthands = undefined;
  * @returns {Promise<void> | void}
  */
 exports.up = (pgm) => {
-    pgm.createTable('features', {
-        feature_id: {
+    pgm.createTable('authentications', {
+        token: {
             type: 'VARCHAR(50)',
-            primaryKey: true
-        },
-        qty: {
-            type: 'INTEGER'
-        },
-        name: {
-            type: 'VARCHAR(50)',
-        },
-        imageUrl: {
-            type: 'JSON'
+            notNull: true
         }
     })
 };
@@ -32,5 +23,5 @@ exports.up = (pgm) => {
  * @returns {Promise<void> | void}
  */
 exports.down = (pgm) => {
-    pgm.dropTable('features')
+    pgm.dropTable('authentications')
 };
