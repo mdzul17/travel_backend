@@ -10,7 +10,7 @@ exports.shorthands = undefined;
  */
 exports.up = (pgm) => {
     pgm.createTable('places', {
-        id: {
+        place_id: {
             type: 'VARCHAR(50)',
             notNull: true
         },

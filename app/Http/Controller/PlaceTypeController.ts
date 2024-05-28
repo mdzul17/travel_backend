@@ -1,18 +1,18 @@
-import PlacesService from "../Service/PlacesService.js";
+import PlaceTypesService from "../Service/PlaceTypesService.js";
 import HttpResponse from "../Utils/HttpResponse.js";
 import express from 'express'
 
-class PlaceController {
+class PlaceTypeController {
     private response = new HttpResponse()
-    private _placesService = new PlacesService()
+    private _placeTypesService = new PlaceTypesService()
 
-    constructor(PlacesService: PlacesService){
-        this._placesService = PlacesService
+    constructor(PlaceTypesService: PlaceTypesService){
+        this._placeTypesService = PlaceTypesService
     }
 
-    async getPlaces(req: express.Request, res: express.Response) {
+    async getPlaceTypes(req: express.Request, res: express.Response) {
         try {
-            const places = await this._placesService.getPlaces();
+            const places = await this._placeTypesService.getPlaceTypes();
             return this.response.success(res, places.rows)
         } catch (error) {
             console.error(error)
@@ -20,10 +20,10 @@ class PlaceController {
         }
     }
 
-    async getPlaceById(req: express.Request, res: express.Response){
+    async getPlaceTypeById(req: express.Request, res: express.Response){
         try {
             const { id } = req.params
-            const place = await this._placesService.getPlaceById(id);
+            const place = await this._placeTypesService.getPlaceTypeById(id);
 
             if(!place.rows.length){
                 return this.response.notFound(res, "No place found")
@@ -36,9 +36,9 @@ class PlaceController {
         }
     }
 
-    async addPlace(req: express.Request, res: express.Response) {
+    async addPlaceType(req: express.Request, res: express.Response) {
         try {
-            const response = await this._placesService.addPlace(req.body)
+            const response = await this._placeTypesService.addPlaceType(req.body)
 
             return this.response.success(
                 res,
@@ -50,9 +50,9 @@ class PlaceController {
         }
     }
 
-    async editPlace(req: express.Request, res: express.Response) {
+    async editPlaceType(req: express.Request, res: express.Response) {
         try {
-            const response = await this._placesService.editPlace({...req.params, ...req.body})
+            const response = await this._placeTypesService.editPlaceType({...req.params, ...req.body})
 
             if(!response.rows.length) {
                 return this.response.notFound(res, "No place found");
@@ -68,9 +68,9 @@ class PlaceController {
         }
     }
 
-    async deletePlace(req: express.Request, res: express.Response){
+    async deletePlaceType(req: express.Request, res: express.Response){
         try {
-            const place = await this._placesService.deletePlace(req.params.id)
+            const place = await this._placeTypesService.deletePlaceType(req.params.id)
 
             if(!place.rows.length){
                 return this.response.notFound(res,
@@ -86,4 +86,4 @@ class PlaceController {
     }
 }
 
-export default PlaceController
+export default PlaceTypeController

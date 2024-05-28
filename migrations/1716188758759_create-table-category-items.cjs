@@ -10,6 +10,10 @@ exports.shorthands = undefined;
  */
 exports.up = (pgm) => {
     pgm.createTable('category_items', {
+        citem_id: {
+            type: 'VARCHAR(50)',
+            primaryKey: true
+        },
         name: {
             type: 'VARCHAR(50)'
         },
