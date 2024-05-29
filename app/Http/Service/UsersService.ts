@@ -54,6 +54,24 @@ class UsersService {
 
         return await this.pool.query(query)
     }
+
+    async getUserByUsername(username: string) {
+        const query = {
+            text: "SELECT username FROM users WHERE username = $1",
+            values: [username]
+        }
+
+        return await this.pool.query(query)
+    }
+
+    async validatePassword(password: string){
+        const query = {
+            text: "SELECT password FROM users WHERE password = $1",
+            values: [password]
+        }
+
+        return await this.pool.query(query)
+    }
 }
 
 export default UsersService

@@ -37,6 +37,13 @@ class HttpResponse {
       err,
     });
   }
+
+  unauthorizedError(res: express.Response, message: string){
+    return res.status(401).json({
+      message,
+      code: 401
+    })
+  }
 }
 
 export default HttpResponse
